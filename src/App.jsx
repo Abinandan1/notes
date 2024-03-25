@@ -10,7 +10,18 @@ import {
   Notes,
 } from "./pages";
 
-import singleNoteLoader from "./pages/SingleNote";
+// LOADERS
+import { loader as singleNoteLoader } from "./pages/SingleNote";
+import { loader as dashboardLoader } from "./pages/Dashboard";
+import { loader as notesLoader } from "./pages/Notes";
+
+// ACTIONS
+import { action as loginAction } from "./pages/Login";
+import { action as registerAction } from "./pages/Register";
+import { action as singleNoteAction } from "./pages/SingleNote";
+
+import { store } from "./store";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,16 +31,19 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    action: loginAction(store),
     errorElement: <Error />,
   },
   {
     path: "/register",
     element: <Register />,
+    action: registerAction(store),
     errorElement: <Error />,
   },
   {
     path: "/dashboard",
     element: <Dashboard />,
+    loader: dashboardLoader(store),
     errorElement: <Error />,
     children: [
       {
@@ -38,6 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path: "notes",
+        loader: notesLoader(store),
         element: <Notes />,
       },
       {
@@ -47,12 +62,13 @@ const router = createBrowserRouter([
       {
         path: "notes/:id",
         element: <SingleNote />,
-        loader: singleNoteLoader,
+        loader: singleNoteLoader(store),
+        action: singleNoteAction(store),
       },
       {
         path: "archive/:id",
         element: <SingleNote />,
-        loader: singleNoteLoader,
+        loader: singleNoteLoader(store),
       },
     ],
   },

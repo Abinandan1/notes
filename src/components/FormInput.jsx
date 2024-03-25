@@ -1,11 +1,21 @@
-const FormInput = ({ label, name, type, defaultValue }) => {
+const FormInput = ({
+  validator,
+  label,
+  name,
+  type,
+  defaultValue,
+  required,
+}) => {
   return (
     <input
-      className="border-[1px] border-gray-300 mb-8 tracking-wide rounded-md px-4 py-2 capitalize"
+      className={`border-[1px] border-gray-300 ${
+        validator && "mb-8"
+      } tracking-wide rounded-md px-4 py-2 capitalize`}
       type={type}
       defaultValue={defaultValue}
       name={name}
       placeholder={label}
+      required
     />
   );
 };
