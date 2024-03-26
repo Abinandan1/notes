@@ -19,6 +19,7 @@ import { loader as notesLoader } from "./pages/Notes";
 import { action as loginAction } from "./pages/Login";
 import { action as registerAction } from "./pages/Register";
 import { action as singleNoteAction } from "./pages/SingleNote";
+import { action as notesAction } from "./pages/Notes";
 
 import { store } from "./store";
 
@@ -53,12 +54,19 @@ const router = createBrowserRouter([
       {
         path: "notes",
         loader: notesLoader(store),
+        action: notesAction(store),
         element: <Notes />,
       },
       {
-        path: "archive",
+        path: "notes?archive=true",
+        loader: notesLoader(store),
+        action: notesAction(store),
         element: <Notes />,
       },
+      // {
+      //   path: "archive",
+      //   element: <Notes />,
+      // },
       {
         path: "notes/:id",
         element: <SingleNote />,

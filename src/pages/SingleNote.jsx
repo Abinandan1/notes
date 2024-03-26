@@ -1,7 +1,6 @@
-import { Form, redirect, useActionData, useLoaderData } from "react-router-dom";
+import { Form, redirect, useLoaderData } from "react-router-dom";
 import { customFetch } from "../utils";
-import { Button, FormInput } from "../components";
-import { useEffect, useState } from "react";
+import { Button } from "../components";
 import { toast } from "react-toastify";
 
 export const loader =
@@ -9,17 +8,19 @@ export const loader =
   async ({ params }) => {
     const { token } = store.getState().userState.user;
 
-    try {
-      const note = await customFetch(`/notes/${params.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return note.data;
-    } catch (error) {
-      console.log(error);
+    if (params.id !== "newNote") {
+      try {
+        const note = await customFetch(`/notes/${params.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        return { ...note.data, isNew: false };
+      } catch (error) {
+        console.log(error);
+      }
     }
-    return null;
+    return { note: { title: "", note: "", updatedAt: "", isNew: true } };
   };
 
 export const action =
@@ -33,6 +34,10 @@ export const action =
         "Empty note will be discarded. Do you wish to continue?"
       );
       if (discard) {
+        if (params.id === "newNote") {
+          toast.success("Empty note discarded.");
+          return redirect("../notes");
+        }
         const note = await customFetch.delete(`/notes/${params.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -42,9 +47,15 @@ export const action =
       return null;
     }
     try {
-      const note = await customFetch.patch(`/notes/${params.id}`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      if (params.id === "newNote") {
+        const note = await customFetch.post(`/notes`, data, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } else {
+        const note = await customFetch.patch(`/notes/${params.id}`, data, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
       toast.success("Note saved successfully");
       return note;
     } catch (error) {}
@@ -52,7 +63,7 @@ export const action =
   };
 const SingleNote = () => {
   const { note } = useLoaderData();
-  const { title, note: text, updatedAt } = note;
+  const { title, note: text, updatedAt, isNew } = note;
   const today = new Date().setHours(0, 0, 0, 0);
   const updatedDay = new Date(updatedAt);
   const editedMargin = new Date(updatedAt).getTime() > today;
@@ -62,7 +73,9 @@ const SingleNote = () => {
 
   return (
     <Form method="post" className="grid gap-2 justify-items-center ">
-      <p className="text-gray-400 text-xs mb-8">Edited at {editedAt}</p>
+      {!isNew && (
+        <p className="text-gray-400 text-xs mb-8">Edited at {editedAt}</p>
+      )}
       <div className="border-b-2 border-gray-300">
         <textarea
           defaultValue={title}

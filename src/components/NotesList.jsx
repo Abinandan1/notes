@@ -1,23 +1,40 @@
-import React, { useEffect, useRef } from "react";
-import { FaPlus } from "react-icons/fa";
+import { useState } from "react";
+import { MdArchive, MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Note from "./Note";
+import Modal from "./Modal";
+import { openModal } from "../features/modal/modalSlice";
+import { useDispatch } from "react-redux";
 const NotesList = ({ notes, layout }) => {
+  const dispatch = useDispatch();
   if (layout === "list") {
     return (
-      <div className="grid gap-4 sm:w-[500px] md:w-[600px]">
+      <div className="grid gap-4">
         {notes.map((note) => {
           return (
-            <Link
-              className={` hover:bg-gray-50 py-2 px-4 rounded-md border-2 border-gray-300`}
-              key={note._id}
-              to={`${note._id}`}
-            >
-              <h1 className="font-bold mb-2">{note.title}</h1>
-              <p className="max-w-16 sm:max-w-[400px]">
-                {note.note.slice(0, 50)}
-                {note.note.length > 40 && "..."}
-              </p>
-            </Link>
+            // <Link
+            //   className={` hover:bg-gray-50 py-2 px-4 rounded-md border-2 border-gray-300 relative`}
+            //   key={note._id}
+            //   to={`${note._id}`}
+            // >
+            //   <div className="grid grid-cols-2 place-items-center absolute top-0 right-0">
+            //     <button
+            //       className="text-lg hover:bg-gray-300 p-2 rounded-[50%]"
+            //       onClick={() => dispatch(openModal({ id: note._id }))}
+            //     >
+            //       <MdDelete />
+            //     </button>
+            //     <button className="text-lg hover:bg-gray-300 p-2 rounded-[50%]">
+            //       <MdArchive />
+            //     </button>
+            //   </div>
+            //   <h1 className="font-bold mb-2">{note.title}</h1>
+            //   <p className="max-w-16 sm:max-w-[400px]">
+            //     {note.note.slice(0, 50)}
+            //     {note.note.length > 40 && "..."}
+            //   </p>
+            // </Link>
+            <Note key={note._id} note={note} layout={layout} />
           );
         })}
       </div>
@@ -28,64 +45,18 @@ const NotesList = ({ notes, layout }) => {
       <div className="grid gap-2">
         {notes.map((note, index) => {
           if (index % 2 === 0) {
-            return (
-              <Link
-                className={` hover:bg-gray-50 py-2 px-4 rounded-md border-2 border-gray-300`}
-                key={note._id}
-                to={`${note._id}`}
-              >
-                <h1 className="font-bold mb-2">{note.title}</h1>
-                <p className="max-w-16">
-                  {note.note.slice(0, 50)}
-                  {note.note.length > 40 && "..."}
-                </p>
-              </Link>
-            );
+            return <Note key={note._id} note={note} />;
           }
         })}
       </div>
       <div className="grid gap-2">
         {notes.map((note, index) => {
           if (index % 2 !== 0) {
-            return (
-              <Link
-                className={` hover:bg-gray-50 py-2 px-4 rounded-md border-2 border-gray-300`}
-                key={note._id}
-                to={`${note._id}`}
-              >
-                <h1 className="font-bold mb-2">{note.title}</h1>
-                <p className="max-w-16">
-                  {note.note.slice(0, 50)}
-                  {note.note.length > 40 && "..."}
-                </p>
-              </Link>
-            );
+            return <Note key={note._id} note={note} />;
           }
         })}
       </div>
     </div>
-    // <div className="max-h gap-4 pt-8 flex flex-col flex-wrap content-center">
-    //   {notes.map((note, index) => {
-    //     return (
-    //       <Link
-    //         className={`w-1/2 hover:bg-gray-50 py-2 px-4 rounded-md border-2 border-gray-300`}
-    //         key={note._id}
-    //         to={`${note._id}`}
-    //       >
-    //         <h1 className="font-bold mb-2">{note.title}</h1>
-    //         <p className="max-w-16">
-    //           {note.note.slice(0, 50)}
-    //           {note.note.length > 40 && "..."}
-    //         </p>
-    //       </Link>
-    //     );
-    //   })}
-    //   <div className="py-2 px-4 rounded-md border-dashed border-2 border-gray-300 grid place-items-center ">
-    //     <Link to="newNote" className="p-2 rounded-[50%] bg-gray-300">
-    //       <FaPlus />
-    //     </Link>
-    //   </div>
-    // </div>
   );
 };
 export default NotesList;
