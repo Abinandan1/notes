@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:3000/api/v1";
+const url = "https://notes-server-r5y5.onrender.com/api/v1";
 export const customFetch = axios.create({
   baseURL: url,
 });

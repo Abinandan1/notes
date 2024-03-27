@@ -54,7 +54,7 @@ const Register = () => {
           <p className="text-sm mb-8">Passwords should match</p>
         )}
         <Button type="submit" text="submit" />
-        <div>
+        <div className="mt-8">
           Already a member?{" "}
           <Link
             to="/login"
