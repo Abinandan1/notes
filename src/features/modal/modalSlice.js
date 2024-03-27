@@ -4,7 +4,7 @@ const initialState = {
   isOpen: false,
   noteId: null,
   method: null,
-  archiveType: "",
+  message: "",
 };
 
 const modalSlice = createSlice({
@@ -14,7 +14,7 @@ const modalSlice = createSlice({
     openModal: (state, action) => {
       state.noteId = action.payload.id;
       state.method = action.payload.method;
-      state.archiveType = action.payload.archiveType;
+      state.message = action.payload.message;
       state.isOpen = true;
     },
     closeModal: (state, action) => {

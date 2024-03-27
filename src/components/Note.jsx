@@ -36,7 +36,13 @@ const Note = ({ note, layout }) => {
           <button
             className="text-lg hover:bg-gray-300 p-2 rounded-[50%]"
             onClick={() =>
-              dispatch(openModal({ id: note._id, method: "delete" }))
+              dispatch(
+                openModal({
+                  id: note._id,
+                  method: "delete",
+                  message: "Are you sure to delete this note?",
+                })
+              )
             }
           >
             <MdDelete />
@@ -47,7 +53,9 @@ const Note = ({ note, layout }) => {
                 openModal({
                   id: note._id,
                   method: "patch",
-                  archiveType: unarchive ? "unarchive" : "archive",
+                  message: unarchive
+                    ? "Are you sure to unarchive this note?"
+                    : "Are you sure to archive this note?",
                 })
               )
             }

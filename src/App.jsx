@@ -70,8 +70,8 @@ const router = createBrowserRouter([
       {
         path: "notes/:id",
         element: <SingleNote />,
-        loader: singleNoteLoader(store),
         action: singleNoteAction(store),
+        loader: singleNoteLoader(store),
       },
       {
         path: "archive/:id",

@@ -45,7 +45,7 @@ const Login = () => {
           validator={true}
         />
         <Button type="submit" text="login" />
-        <div>
+        <div className="mt-8">
           Not a member yet?{" "}
           <Link
             to="/register"

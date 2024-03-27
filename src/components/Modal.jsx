@@ -5,22 +5,14 @@ import Button from "./Button";
 
 const Modal = () => {
   const dispatch = useDispatch();
-  const { method, archiveType } = useSelector((state) => state.modalState);
+  const { method, message } = useSelector((state) => state.modalState);
   return (
     <Form
       method={method}
       className="fixed top-0 left-0 w-screen h-screen z-10 bg-[rgba(0,0,0,0.5)] grid justify-items-center content-center"
     >
       <div className="bg-white rounded-md px-8 py-4 grid gap-8">
-        <p>
-          Are you sure to{" "}
-          {method === "delete"
-            ? "delete"
-            : archiveType === "archive"
-            ? "archive"
-            : "unarchive"}{" "}
-          this note?
-        </p>
+        <p>{message}</p>
         <div className="grid grid-cols-2 gap-8">
           <Button text="yes" type="submit" />
           <button
