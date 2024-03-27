@@ -25,7 +25,7 @@ const Sidebar = ({ toggle, setToggle }) => {
           </li>
           <li className="capitalize text-xl">
             <Link
-              to="notes"
+              to="/dashboard/notes"
               className="block px-10 hover:px-12 py-2 hover:bg-white transition-all duration-300 hover:border-l-[12px] border-yellow-800 hover:text-yellow-800"
             >
               notes

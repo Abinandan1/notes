@@ -13,6 +13,7 @@ export const loader =
   (store) =>
   async ({ request }) => {
     let search = new URL(request.url).search;
+    console.log(search);
     const { token } = store.getState().userState.user;
     try {
       const notes = await customFetch(`/notes${search || "?archive=false"}`, {
@@ -20,7 +21,6 @@ export const loader =
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(notes);
       return notes.data;
     } catch (error) {
       console.log(error);
@@ -69,24 +69,15 @@ const Notes = () => {
   const [layoutInfo, setLayoutInfo] = useState(false);
   const [newNoteInfo, setNewNoteInfo] = useState(false);
   const { notes } = useLoaderData();
-  const [myNotes, setMyNotes] = useState(notes);
   const { isOpen } = useSelector((state) => {
     return state.modalState;
   });
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setMyNotes(
-      notes.filter((note) => {
-        return note.title.includes(value) || note.note.includes(value);
-      })
-    );
-  };
   return (
     <section className="grid justify-center">
       {isOpen && <Modal />}
       <div className="flex items-center justify-center gap-4 mb-8">
         {/* SEARCH NOTES FORM */}
-        <FormInput handleSearch={handleSearch} label="search your notes" />
+        <FormInput label="search your notes" />
         {/* LIST/GRID */}
         <div className="flex relative items-center">
           <button
@@ -105,7 +96,7 @@ const Notes = () => {
         </div>
       </div>
       {/* NOTES LIST */}
-      <NotesList notes={myNotes} layout={layout} />
+      <NotesList notes={notes} layout={layout} />
       {/* NEW NOTE */}
       <Link
         onMouseOver={() => setNewNoteInfo(true)}
