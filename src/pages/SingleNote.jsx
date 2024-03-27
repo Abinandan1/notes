@@ -120,7 +120,7 @@ const SingleNote = () => {
             name="title"
             cols="80"
             rows="1"
-            className="px-2"
+            className="px-2 max-sm:w-[90vw]"
             onBlur={(e) => {
               e.currentTarget.parentElement.classList.toggle("rounded-md");
               e.currentTarget.parentElement.classList.toggle("border-black");
@@ -140,6 +140,7 @@ const SingleNote = () => {
               e.currentTarget.style.outline = "none";
             }}
             defaultValue={text}
+            className="max-sm:w-[90vw]"
             name="note"
             cols="80"
             rows="15"

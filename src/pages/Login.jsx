@@ -27,7 +27,7 @@ const Login = () => {
     <div className="h-screen grid place-items-center">
       <Form
         method="post"
-        className="grid place-items-center shadow-md mx-auto w-1/2 rounded-md p-4"
+        className="grid place-items-center shadow-md mx-auto w-[40vw] max-sm:w-[90vw] rounded-md p-4"
       >
         <h3 className="capitalize text-4xl mb-8 font-bold ">login</h3>
         <FormInput
