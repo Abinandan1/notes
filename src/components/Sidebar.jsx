@@ -17,6 +17,14 @@ const Sidebar = ({ toggle, setToggle }) => {
         <ul className="mt-16 flex flex-col gap-4">
           <li className="capitalize text-xl">
             <Link
+              to=""
+              className="block px-10 hover:px-12 py-2 hover:bg-white transition-all duration-300 hover:border-l-[12px] border-yellow-800 hover:text-yellow-800"
+            >
+              dashboard
+            </Link>
+          </li>
+          <li className="capitalize text-xl">
+            <Link
               to="notes"
               className="block px-10 hover:px-12 py-2 hover:bg-white transition-all duration-300 hover:border-l-[12px] border-yellow-800 hover:text-yellow-800"
             >

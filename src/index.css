@@ -4,7 +4,10 @@
 
 @layer components {
   .align-element {
-    @apply mx-auto max-w-6xl px-8  grid justify-center py-8;
+    @apply mx-auto max-w-6xl grid;
   }
 }
 /* h-[calc(100vh-68px)] */
+/* body{
+  background: #fef08a;
+} */

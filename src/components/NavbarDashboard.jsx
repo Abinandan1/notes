@@ -9,7 +9,7 @@ const NavbarDashboard = ({
   username,
 }) => {
   return (
-    <nav className="py-4 px-8">
+    <nav className="py-4 px-8 align-element">
       <div className="flex justify-between items-center ">
         <button
           onClick={() => setToggle(!toggle)}

@@ -1,6 +1,6 @@
 import { Modal, NotesList } from "../components";
 import { TbLayoutList, TbLayoutGrid } from "react-icons/tb";
-import { Link, useLoaderData } from "react-router-dom";
+import { Form, Link, useLoaderData } from "react-router-dom";
 import { customFetch } from "../utils";
 import { FormInput } from "../components";
 import { useState } from "react";
@@ -20,6 +20,7 @@ export const loader =
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(notes);
       return notes.data;
     } catch (error) {
       console.log(error);
@@ -68,15 +69,24 @@ const Notes = () => {
   const [layoutInfo, setLayoutInfo] = useState(false);
   const [newNoteInfo, setNewNoteInfo] = useState(false);
   const { notes } = useLoaderData();
+  const [myNotes, setMyNotes] = useState(notes);
   const { isOpen } = useSelector((state) => {
     return state.modalState;
   });
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setMyNotes(
+      notes.filter((note) => {
+        return note.title.includes(value) || note.note.includes(value);
+      })
+    );
+  };
   return (
-    <section>
+    <section className="grid justify-center">
       {isOpen && <Modal />}
       <div className="flex items-center justify-center gap-4 mb-8">
         {/* SEARCH NOTES FORM */}
-        <FormInput label="search your notes" />
+        <FormInput handleSearch={handleSearch} label="search your notes" />
         {/* LIST/GRID */}
         <div className="flex relative items-center">
           <button
@@ -95,7 +105,7 @@ const Notes = () => {
         </div>
       </div>
       {/* NOTES LIST */}
-      <NotesList notes={notes} layout={layout} />
+      <NotesList notes={myNotes} layout={layout} />
       {/* NEW NOTE */}
       <Link
         onMouseOver={() => setNewNoteInfo(true)}
